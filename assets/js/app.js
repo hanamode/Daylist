@@ -198,7 +198,7 @@
 
   function updateClock() {
     const date = new Date();
-    $("#topClock").textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}`;
+    $("#topClock").textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
     $("#clock").textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
 
     if (dateKey(date) !== lastDateKey) {

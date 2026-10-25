@@ -3,23 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>日课 · 每周日程</title>
-<meta name="description" content="日课：一个轻量的每周日程规划工具。按周安排时间与活动，完成后打勾，自动保存到本机。">
+<title>DAYLIST · 每周日程</title>
+<meta name="description" content="DAYLIST：一个轻量的每周日程规划工具。按周安排时间与活动，完成后打勾，自动保存到本机。">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#f2f1ed">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231d4ed8'/><text y='72' x='50' text-anchor='middle' font-size='58' font-weight='700' fill='%23fff' font-family='Helvetica,Arial'>日</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231d4ed8'/><path d='M24 52 L42 70 L76 32' fill='none' stroke='%23ffffff' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <a class="skip-link" href="#plan">跳到周安排</a>
 
 <header class="topbar">
-  <a class="brand" href="./" aria-label="日课 · 每周日程">
-    <span class="brand-mark" aria-hidden="true">日</span>
-    <span class="brand-text">
-      <b>日课</b>
-      <i>DAYLIST</i>
-    </span>
+  <a class="brand" href="./" aria-label="DAYLIST">
+    <span class="brand-text"><b>DAYLIST</b></span>
   </a>
 
   <div class="top-mid">
@@ -28,14 +24,18 @@
 
   <div class="top-date">
     <span class="top-date-cn" id="topDate">—</span>
-    <span class="top-clock" id="topClock">--:--</span>
+    <span class="top-clock" id="topClock">--:--:--</span>
   </div>
 </header>
 
 <main class="shell">
   <aside class="intro" aria-labelledby="pageTitle">
-    <h1 id="pageTitle"><span>每周</span><span>日程</span></h1>
-    <p class="intro-latin" aria-hidden="true">WEEKLY</p>
+    <div class="intro-wordmark">
+      <h1 id="pageTitle"><span>每周</span><span>日程</span></h1>
+      <p class="intro-latin" aria-hidden="true">
+        <span>W</span><span>E</span><span>E</span><span>K</span><span>L</span><span>Y</span>
+      </p>
+    </div>
 
     <dl class="date-meta">
       <div class="meta-row">

@@ -1,17 +1,9 @@
 /* ============================================================
-   日课 · DAYLIST —— 每周日程
+   Daylist —— 每周日程
    暖灰纸面 / 深色文字 / 单点蓝
    无圆角、1px 线框、等宽小标签，延续语林的工业编辑气质。
    只保留：星期、时间段、活动、完成、删除、按周保存。
    ============================================================ */
-
-@font-face {
-  font-family: "Oswald";
-  src: url("../fonts/oswald-latin.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-}
 
 :root {
   --bg:        #f2f1ed;
@@ -34,11 +26,16 @@
   --accent-line: rgba(29, 78, 216, .35);
   --error:       #a83228;
 
+  --brand:       #1befff;
+  --brand-deep:  #089fb4;
+  --brand-light: #82f8ff;
+
   --mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  --display: "Oswald", "Avenir Next Condensed", "Arial Narrow",
-             "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
-  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
-          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+  --brand-font: "Avenir Next", "SF Pro Rounded", "Helvetica Neue",
+                "PingFang SC", sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial,
+          "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  --display: var(--sans);
 
   --nav-h: 52px;
   --status-h: 28px;
@@ -51,6 +48,7 @@ html {
   background: var(--bg);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  scrollbar-width: none;
 }
 
 body {
@@ -64,7 +62,11 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
+
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
 /* 极淡的扫描线，只作为纸面的质地 */
 body::before {
@@ -165,42 +167,25 @@ a { color: inherit; text-decoration: none; }
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   flex: none;
   padding: 0 18px;
   border-right: 1px solid var(--line-2);
 }
-.brand:hover .brand-text b { color: var(--accent); }
-
-.brand-mark {
-  width: 25px;
-  height: 25px;
-  flex: none;
-  display: grid;
-  place-items: center;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font: 700 13px/1 var(--display);
-}
+.brand:hover .brand-text b { color: var(--brand-deep); }
 
 .brand-text {
   display: flex;
-  flex-direction: column;
-  line-height: 1.08;
+  align-items: center;
+  line-height: 1;
 }
 .brand-text b {
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: .16em;
+  font-family: var(--brand-font);
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .045em;
+  color: var(--fg);
   transition: color .2s ease;
-}
-.brand-text i {
-  font-family: var(--mono);
-  font-style: normal;
-  font-size: 8px;
-  letter-spacing: .24em;
-  color: var(--fg-3);
 }
 
 .top-mid {
@@ -225,9 +210,10 @@ a { color: inherit; text-decoration: none; }
   font-variant-numeric: tabular-nums;
 }
 .top-clock {
-  min-width: 37px;
+  min-width: 62px;
   color: var(--fg);
-  letter-spacing: .08em;
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------- 页面骨架 ---------- */
@@ -259,8 +245,15 @@ a { color: inherit; text-decoration: none; }
   background: var(--accent);
 }
 
-.intro h1 {
+.intro-wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 100%;
   margin-top: 28px;
+}
+.intro h1 {
+  margin-top: 0;
   font-family: var(--display);
   font-weight: 700;
   font-size: clamp(58px, 5.5vw, 78px);
@@ -273,15 +266,20 @@ a { color: inherit; text-decoration: none; }
 .intro h1 span:last-child  { animation: rise-in .48s .05s ease both; }
 
 .intro-latin {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   margin-top: 18px;
   font-family: var(--display);
   font-size: 20px;
   font-weight: 400;
   line-height: 1;
-  letter-spacing: .5em;
+  letter-spacing: 0;
   color: var(--fg-4);
+  white-space: nowrap;
   animation: rise-in .48s .1s ease both;
 }
+.intro-latin span { display: inline-block; }
 
 .date-meta {
   margin-top: 30px;
@@ -1023,6 +1021,54 @@ a { color: inherit; text-decoration: none; }
   to   { opacity: 1; transform: none; }
 }
 
+/* ---------- 桌面视口适配：铺满窗口，页面不出滚动条 ---------- */
+@media (min-width: 1181px) {
+  html, body { height: 100%; overflow: hidden; }
+
+  .shell {
+    margin: var(--nav-h) auto 0;
+    height: calc(100vh - var(--nav-h) - var(--status-h));
+    padding: 42px 32px 24px;
+    overflow: hidden;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .intro {
+    position: static;
+    max-height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .workspace {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-head,
+  .add-form,
+  .form-error { flex: none; }
+
+  .week-board {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 22px;
+    overflow: hidden;
+  }
+
+  .day-col,
+  .day-body { min-height: 0; }
+
+  .day-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 /* ---------- 响应式 ---------- */
 @media (max-width: 1180px) {
   .shell {
@@ -1040,18 +1086,20 @@ a { color: inherit; text-decoration: none; }
     align-items: start;
   }
   .intro::before { width: 30px; }
-  .intro h1 {
+  .intro-wordmark {
     grid-column: 1;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
+  .intro h1 {
     margin-top: 0;
     font-size: clamp(54px, 7vw, 70px);
     line-height: 1;
   }
   .intro h1 span { display: inline; margin-right: .1em; }
   .intro-latin {
-    grid-column: 1;
     margin-top: 14px;
     font-size: 17px;
-    letter-spacing: .46em;
   }
   .date-meta {
     grid-column: 2;
@@ -1130,15 +1178,15 @@ a { color: inherit; text-decoration: none; }
     display: block;
     padding-top: 15px;
   }
+  .intro-wordmark { margin-top: 24px; }
   .intro h1 {
-    margin-top: 24px;
+    margin-top: 0;
     font-size: clamp(46px, 15vw, 62px);
     letter-spacing: .07em;
   }
   .intro-latin {
     margin-top: 12px;
     font-size: 15px;
-    letter-spacing: .44em;
   }
   .date-meta {
     display: flex;

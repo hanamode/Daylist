@@ -1,8 +1,13 @@
-# 日课 · DAYLIST
+# DAYLIST
 
 一个很小、很安静的每周日程规划页。
 
-## 使用
+## macOS 应用
+
+双击工作区根目录的 **`DAYLIST.app`** 即可运行，不需要终端或浏览器标签页。  
+App 启动时会自动铺满可用屏幕，页面无可见滚动条；数据保存在 WKWebView 的本机存储中，网页版与 App 版的数据互不相通。
+
+## 网页版
 
 双击 `start.command`，浏览器会打开 <http://127.0.0.1:4173/>。  
 也可以直接打开 `index.html`，不需要安装任何依赖。
@@ -40,8 +45,7 @@ daylist/
 ├── screenshots/
 └── assets/
     ├── css/style.css
-    ├── js/app.js
-    └── fonts/oswald-latin.woff2
+    └── js/app.js
 ```
 
 数据保存在浏览器的 `localStorage`（键名 `daylist.week.v2`）。清除站点数据会同时清除所有周的日程。
