@@ -45,7 +45,8 @@ daylist/
 ├── screenshots/
 └── assets/
     ├── css/style.css
-    └── js/app.js
+    ├── js/app.js
+    └── fonts/oswald-latin.woff2
 ```
 
 数据保存在浏览器的 `localStorage`（键名 `daylist.week.v2`）。清除站点数据会同时清除所有周的日程。

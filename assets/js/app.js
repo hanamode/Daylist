@@ -193,13 +193,15 @@
   function updateDateLabels(date) {
     const weekday = DAY_NAMES[(date.getDay() + 6) % 7];
     $("#topDate").textContent = `${dotDate(date)} · ${weekday}`;
-    $("#footDate").textContent = `${dotDate(date)} ${DAY_EN[date.getDay()]}`;
+    const footDate = $("#footDate");
+    if (footDate) footDate.textContent = `${dotDate(date)} ${DAY_EN[date.getDay()]}`;
   }
 
   function updateClock() {
     const date = new Date();
     $("#topClock").textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
-    $("#clock").textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
+    const footerClock = $("#clock");
+    if (footerClock) footerClock.textContent = `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
 
     if (dateKey(date) !== lastDateKey) {
       lastDateKey = dateKey(date);
