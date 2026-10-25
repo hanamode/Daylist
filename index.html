@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>日课 · 每周日程</title>
+<meta name="description" content="日课：一个轻量的每周日程规划工具。按周安排时间与活动，完成后打勾，自动保存到本机。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f2f1ed">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231d4ed8'/><text y='72' x='50' text-anchor='middle' font-size='58' font-weight='700' fill='%23fff' font-family='Helvetica,Arial'>日</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#plan">跳到周安排</a>
+
+<header class="topbar">
+  <a class="brand" href="./" aria-label="日课 · 每周日程">
+    <span class="brand-mark" aria-hidden="true">日</span>
+    <span class="brand-text">
+      <b>日课</b>
+      <i>DAYLIST</i>
+    </span>
+  </a>
+
+  <div class="top-mid">
+    <span class="mic">每周日程 <i>WEEKLY PLANNER</i></span>
+  </div>
+
+  <div class="top-date">
+    <span class="top-date-cn" id="topDate">—</span>
+    <span class="top-clock" id="topClock">--:--</span>
+  </div>
+</header>
+
+<main class="shell">
+  <aside class="intro" aria-labelledby="pageTitle">
+    <h1 id="pageTitle"><span>每周</span><span>日程</span></h1>
+    <p class="intro-latin" aria-hidden="true">WEEKLY</p>
+
+    <dl class="date-meta">
+      <div class="meta-row">
+        <dt>周期 <i>RANGE</i></dt>
+        <dd id="weekRange">—</dd>
+      </div>
+      <div class="meta-row">
+        <dt>周次 <i>WEEK</i></dt>
+        <dd id="weekNumber">—</dd>
+      </div>
+    </dl>
+
+    <button class="week-return" id="weekReturn" type="button" hidden>
+      回到本周 <span aria-hidden="true">→</span>
+    </button>
+
+    <div class="progress progress-today">
+      <div class="progress-head">
+        <span class="progress-label">本日完成 <i>DONE</i></span>
+        <span class="progress-num" id="todayProgressText">0 / 0</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-labelledby="todayProgressText"
+           aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" id="todayProgressBar">
+        <i id="todayProgressFill"></i>
+      </div>
+    </div>
+
+    <div class="progress progress-week">
+      <div class="progress-head">
+        <span class="progress-label">本周完成 <i>DONE</i></span>
+        <span class="progress-num" id="progressText">0 / 0</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-labelledby="progressText"
+           aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" id="progressBar">
+        <i id="progressFill"></i>
+      </div>
+    </div>
+  </aside>
+
+  <section class="workspace" id="plan" aria-labelledby="planHeading">
+    <div class="section-head">
+      <h2 class="mic" id="planHeading">周安排 <i>WEEKLY</i></h2>
+      <span class="section-count" id="itemCount">00 ITEMS</span>
+      <div class="week-nav" role="group" aria-label="切换周">
+        <button class="week-step" id="prevWeek" type="button" aria-label="上一周">←</button>
+        <span class="week-tag" id="weekTag">第 — 周</span>
+        <button class="week-step" id="nextWeek" type="button" aria-label="下一周">→</button>
+      </div>
+    </div>
+
+    <form class="add-form" id="addForm" novalidate>
+      <div class="field field-day">
+        <label for="dayInput">星期 <i>DAY</i></label>
+        <select id="dayInput" name="day" aria-describedby="formError"></select>
+      </div>
+
+      <div class="field field-time">
+        <span class="field-label">时间 <i>24H</i></span>
+        <div class="time-range">
+          <span class="time-part">
+            <span class="time-caption" aria-hidden="true">起</span>
+            <input class="time-segment" id="startHourInput" type="text" inputmode="numeric"
+                   maxlength="2" placeholder="09" autocomplete="off"
+                   aria-label="开始时间的小时" aria-describedby="formError">
+            <span class="time-colon" aria-hidden="true">:</span>
+            <input class="time-segment" id="startMinuteInput" type="text" inputmode="numeric"
+                   maxlength="2" placeholder="30" autocomplete="off"
+                   aria-label="开始时间的分钟" aria-describedby="formError">
+          </span>
+          <span class="time-dash" aria-hidden="true">—</span>
+          <span class="time-part">
+            <span class="time-caption" aria-hidden="true">止</span>
+            <input class="time-segment" id="endHourInput" type="text" inputmode="numeric"
+                   maxlength="2" placeholder="10" autocomplete="off"
+                   aria-label="结束时间的小时" aria-describedby="formError">
+            <span class="time-colon" aria-hidden="true">:</span>
+            <input class="time-segment" id="endMinuteInput" type="text" inputmode="numeric"
+                   maxlength="2" placeholder="00" autocomplete="off"
+                   aria-label="结束时间的分钟" aria-describedby="formError">
+          </span>
+        </div>
+      </div>
+
+      <div class="field field-activity">
+        <label for="activityInput">活动 <i>ACTIVITY</i></label>
+        <input id="activityInput" name="activity" type="text" required
+               maxlength="80" autocomplete="off" spellcheck="false"
+               placeholder="例如：阅读 30 分钟" aria-describedby="formError">
+      </div>
+
+      <button class="add-btn" type="submit">
+        <span>加入日程</span>
+        <i>ADD <span aria-hidden="true">+</span></i>
+      </button>
+    </form>
+    <p class="form-error" id="formError" role="alert" hidden></p>
+
+    <div class="week-board" id="weekBoard" aria-label="每周日程表"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <span id="toastText"></span>
+  <button class="toast-undo" id="toastUndo" type="button" aria-label="撤销清除" title="撤销清除" hidden>
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4.2 6.1H10a3.1 3.1 0 0 1 0 6.2H6.2M4.2 6.1l2.1-2.1M4.2 6.1l2.1 2.1" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</div>
+
+<footer class="statusbar">
+  <span class="sb-left">
+    <b>DAYLIST</b><span class="sb-sep">/</span><span>LOCAL</span>
+  </span>
+  <span class="sb-mid">
+    <span class="save-dot" id="saveDot" aria-hidden="true"></span>
+    <span id="saveState">已保存到本机</span>
+    <i>LOCAL STORAGE</i>
+  </span>
+  <span class="sb-right">
+    <span class="sb-dot" aria-hidden="true"></span>
+    <span id="footDate">—</span>
+    <span class="sb-sep">|</span>
+    <time id="clock">--:--:--</time>
+  </span>
+</footer>
+
+<div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
